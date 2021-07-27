@@ -1,14 +1,14 @@
-import React from "react";
-import Topbar from "../../Components/Topbar/Topbar";
-import { Search } from "@material-ui/icons";
-import Conversation from "../../Components/Conversation/Conversation";
-import Message from "../../Components/Message/Message";
-import "./messanger.css";
-import ChatOnline from "../../Components/ChatOnline/ChatOnline";
-import { AuthContext } from "../../Context/AuthContext";
-import { useContext, useState, useEffect, useRef } from "react";
-import axios from "axios";
-import { io } from "socket.io-client";
+import React from 'react';
+import Topbar from '../../Components/Topbar/Topbar';
+import { Search } from '@material-ui/icons';
+import Conversation from '../../Components/Conversation/Conversation';
+import Message from '../../Components/Message/Message';
+import './messanger.css';
+import ChatOnline from '../../Components/ChatOnline/ChatOnline';
+import { AuthContext } from '../../Context/AuthContext';
+import { useContext, useState, useEffect, useRef } from 'react';
+import axios from 'axios';
+import { io } from 'socket.io-client';
 
 export default function Messenger() {
   // States...
@@ -26,11 +26,11 @@ export default function Messenger() {
   const { user } = useContext(AuthContext);
 
   useEffect(() => {
-    socket.current = io("ws://localhost:8000");
+    socket.current = io('https://codecial-socket.herokuapp.com');
   }, [socket]);
 
   useEffect(() => {
-    socket.current.on("getMessage", (data) => {
+    socket.current.on('getMessage', (data) => {
       setArrivalMessages({
         sender: data.senderId,
         text: data.text,
@@ -46,8 +46,8 @@ export default function Messenger() {
   }, [arrivalMessages, currentChat]);
 
   useEffect(() => {
-    socket.current.emit("addUser", user._id);
-    socket.current.on("getUsers", (users) => {
+    socket.current.emit('addUser', user._id);
+    socket.current.on('getUsers', (users) => {
       setOnlineUsers(
         user.following.filter((f) => users.some((u) => u.userId === f))
       );
@@ -57,10 +57,10 @@ export default function Messenger() {
   useEffect(() => {
     const getConversation = async () => {
       try {
-        const res = await axios.get("/conversations/" + user._id);
+        const res = await axios.get('/conversations/' + user._id);
         setConversations(res.data);
       } catch (err) {
-        console.log("Messanger file", err);
+        console.log('Messanger file', err);
       }
     };
     getConversation();
@@ -69,7 +69,7 @@ export default function Messenger() {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get("/messages/" + currentChat?._id);
+        const res = await axios.get('/messages/' + currentChat?._id);
         const dummy = res.data;
         const temp = dummy.map((data) => {
           return {
@@ -97,7 +97,7 @@ export default function Messenger() {
         const res = await axios.get(`/users?userId=${receiverId}`);
         setReceiverProfile(res.data.profilePicture);
       } catch (err) {
-        console.log("Messenger File Error", err);
+        console.log('Messenger File Error', err);
       }
     };
     getProfilePicture();
@@ -117,23 +117,23 @@ export default function Messenger() {
       (member) => member !== user._id
     );
 
-    socket.current.emit("sendMessage", {
+    socket.current.emit('sendMessage', {
       senderId: user._id,
       receiverId,
       text: newMessages,
     });
 
     try {
-      const res = await axios.post("/messages", message);
+      const res = await axios.post('/messages', message);
       setMessages([...messages, res.data]);
-      setNewMessages("");
+      setNewMessages('');
     } catch (err) {
       console.log(err);
     }
   };
 
   useEffect(() => {
-    scrollref.current?.scrollIntoView({ behavior: "smooth" });
+    scrollref.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages]);
 
   return (
@@ -144,17 +144,17 @@ export default function Messenger() {
           <div
             className="col-3"
             style={{
-              height: "calc(100vh - 55px)",
-              overflow: "scroll",
+              height: 'calc(100vh - 55px)',
+              overflow: 'scroll',
             }}
           >
             <div className="row">
               <div
                 className="m-2 d-flex align-items-center"
                 style={{
-                  height: "40px",
-                  width: "100%",
-                  borderBottom: "1px solid gray",
+                  height: '40px',
+                  width: '100%',
+                  borderBottom: '1px solid gray',
                 }}
               >
                 <Search />
@@ -171,9 +171,9 @@ export default function Messenger() {
                   onClick={() => setCurrentChat(c)}
                   className="ml-2 mt-2 mr-2 d-flex align-items-center hoverName"
                   style={{
-                    height: "40px",
-                    width: "100%",
-                    cursor: "pointer",
+                    height: '40px',
+                    width: '100%',
+                    cursor: 'pointer',
                   }}
                 >
                   <Conversation conversation={c} currentUser={user} />
@@ -186,15 +186,15 @@ export default function Messenger() {
             <div
               className="col-6 hideScrollbar"
               style={{
-                height: "calc(100vh - 55px)",
-                overflow: "scroll",
+                height: 'calc(100vh - 55px)',
+                overflow: 'scroll',
               }}
             >
               <div
                 className="overflow-scroll"
                 style={{
-                  height: "87%",
-                  overflow: "scroll",
+                  height: '87%',
+                  overflow: 'scroll',
                 }}
               >
                 {messages.map((m) => (
@@ -210,7 +210,7 @@ export default function Messenger() {
                 ))}
               </div>
               <div className="d-flex mb-2 align-items-center">
-                <div style={{ width: "600px" }}>
+                <div style={{ width: '600px' }}>
                   <textarea
                     className="form-control"
                     rows="3"
@@ -222,7 +222,7 @@ export default function Messenger() {
                   <button
                     type="submit"
                     class="ml-2 btn btn-primary text-white border-0 px-4"
-                    style={{ boxShadow: "none" }}
+                    style={{ boxShadow: 'none' }}
                     onClick={handleSubmit}
                   >
                     Send
@@ -238,10 +238,10 @@ export default function Messenger() {
 
           <div
             className="col-3"
-            style={{ height: "calc(100vh - 55px)", overflow: "scroll" }}
+            style={{ height: 'calc(100vh - 55px)', overflow: 'scroll' }}
           >
             <div className="my-1">
-              <div className="py-2" style={{ borderBottom: "1px solid gray" }}>
+              <div className="py-2" style={{ borderBottom: '1px solid gray' }}>
                 <span className="font-weight-bold">Online Friends</span>
               </div>
               <ChatOnline

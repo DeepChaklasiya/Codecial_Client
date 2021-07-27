@@ -1,8 +1,9 @@
-import { useEffect, useState, useContext } from "react";
-import axios from "axios";
-import { Link } from "react-router-dom";
-import { AuthContext } from "../../Context/AuthContext";
-import { Add, Remove } from "@material-ui/icons";
+import React from 'react';
+import { useEffect, useState, useContext } from 'react';
+import axios from 'axios';
+import { Link } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthContext';
+import { Add, Remove } from '@material-ui/icons';
 
 export default function ProfileRightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -22,7 +23,7 @@ export default function ProfileRightbar({ user }) {
         await axios.put(`/users/${user._id}/unfollow`, {
           userId: currentUser._id,
         });
-        dispatch({ type: "UNFOLLOW", payload: user._id });
+        dispatch({ type: 'UNFOLLOW', payload: user._id });
       } else {
         await axios.put(`/users/${user._id}/follow`, {
           userId: currentUser._id,
@@ -37,9 +38,9 @@ export default function ProfileRightbar({ user }) {
             receiverId: user._id,
           };
 
-          const res = await axios.post("/conversations", newConversation);
+          const res = await axios.post('/conversations', newConversation);
         }
-        dispatch({ type: "FOLLOW", payload: user._id });
+        dispatch({ type: 'FOLLOW', payload: user._id });
       }
       window.location.reload();
     } catch (err) {
@@ -51,7 +52,7 @@ export default function ProfileRightbar({ user }) {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get("/users/friends/" + user._id);
+        const friendList = await axios.get('/users/friends/' + user._id);
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);
@@ -61,12 +62,12 @@ export default function ProfileRightbar({ user }) {
   }, [user]);
 
   return (
-    <div className="mr-1" style={{ maxWidth: "100%", overflowX: "hidden" }}>
+    <div className="mr-1" style={{ maxWidth: '100%', overflowX: 'hidden' }}>
       <div
         className="container-fluid"
         style={{
-          height: "calc(100vh - 55px)",
-          overflow: "scroll",
+          height: 'calc(100vh - 55px)',
+          overflow: 'scroll',
         }}
       >
         {user?.username !== currentUser?.username && (
@@ -74,17 +75,17 @@ export default function ProfileRightbar({ user }) {
             <div>
               <button
                 className="btn btn-primary btn-block d-flex align-items-center border-none"
-                style={{ curson: "pointer" }}
+                style={{ curson: 'pointer' }}
                 onClick={handleClick}
               >
-                {followed ? "Unfollow" : "Follow"}
+                {followed ? 'Unfollow' : 'Follow'}
                 {followed ? <Remove /> : <Add />}
               </button>
             </div>
           </div>
         )}
         <div className="row my-3">
-          <div className="mb-1" style={{ width: "100%" }}>
+          <div className="mb-1" style={{ width: '100%' }}>
             <div className="font-weight-bold">User Infromation</div>
           </div>
           <div>
@@ -92,19 +93,19 @@ export default function ProfileRightbar({ user }) {
               <li>City : &nbsp; {user.city}</li>
               <li>From : &nbsp; {user.from}</li>
               <li>
-                Relationship : &nbsp;{" "}
+                Relationship : &nbsp;{' '}
                 {user.relationship === 1
-                  ? "Married"
+                  ? 'Married'
                   : user.relationship === 2
-                  ? "Unmarried"
-                  : "-"}
+                  ? 'Unmarried'
+                  : '-'}
               </li>
             </ul>
           </div>
         </div>
 
         <div className="row">
-          <div className="mb-2" style={{ width: "100%" }}>
+          <div className="mb-2" style={{ width: '100%' }}>
             <div className="font-weight-bold">User Friends</div>
           </div>
           <div className="d-flex flex-wrap align-content-start">
@@ -114,17 +115,17 @@ export default function ProfileRightbar({ user }) {
             {friends.map((frnd) => (
               <Link
                 to={`/profile/${frnd.username}`}
-                style={{ textDecoration: "none" }}
+                style={{ textDecoration: 'none' }}
               >
                 <div
                   className="card border-0 ml-2 mb-2"
-                  style={{ width: "100px" }}
+                  style={{ width: '100px' }}
                 >
                   <img
                     src={
                       frnd.profilePicture
                         ? PF + frnd.profilePicture
-                        : PF + "noUserImage.png"
+                        : PF + 'noUserImage.png'
                     }
                     alt=""
                     width="100px"
@@ -133,9 +134,9 @@ export default function ProfileRightbar({ user }) {
                   ></img>
                   <div
                     className="card-body text-center"
-                    style={{ padding: "0px" }}
+                    style={{ padding: '0px' }}
                   >
-                    <p className="card-text" style={{ fontSize: "15px" }}>
+                    <p className="card-text" style={{ fontSize: '15px' }}>
                       {frnd.username}
                     </p>
                   </div>

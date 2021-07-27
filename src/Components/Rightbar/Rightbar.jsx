@@ -1,13 +1,13 @@
-import { Users } from "../../dummyData";
-import Online from "../Online/Online";
-import ProfileRightbar from "../ProfileRightbar/ProfileRightbar";
-import "./rightbar.css";
-import { useContext, useState, useEffect, useRef } from "react";
-import { io } from "socket.io-client";
-import { useParams } from "react-router-dom";
-import { AuthContext } from "../../Context/AuthContext";
-import axios from "axios";
-const YoutubeMusicApi = require("youtube-music-api");
+import React from 'react';
+import Online from '../Online/Online';
+import ProfileRightbar from '../ProfileRightbar/ProfileRightbar';
+import './rightbar.css';
+import { useContext, useState, useEffect, useRef } from 'react';
+import { io } from 'socket.io-client';
+import { useParams } from 'react-router-dom';
+import { AuthContext } from '../../Context/AuthContext';
+import axios from 'axios';
+const YoutubeMusicApi = require('youtube-music-api');
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -17,12 +17,12 @@ export default function Rightbar({ user }) {
   const socket = useRef();
   const { username } = useParams();
   useEffect(() => {
-    socket.current = io("ws://localhost:8000");
+    socket.current = io('https://codecial-socket.herokuapp.com');
   }, [socket]);
 
   useEffect(() => {
-    socket.current.emit("addUser", currentUser._id);
-    socket.current.on("getUsers", (users) => {
+    socket.current.emit('addUser', currentUser._id);
+    socket.current.on('getUsers', (users) => {
       setOnlineUsers(
         currentUser.following.filter((f) => users.some((u) => u.userId === f))
       );
@@ -34,8 +34,8 @@ export default function Rightbar({ user }) {
       <div
         className="container-fluid"
         style={{
-          height: "calc(100vh - 55px)",
-          overflow: "scroll",
+          height: 'calc(100vh - 55px)',
+          overflow: 'scroll',
         }}
       >
         {/* <div className="row">
@@ -61,7 +61,7 @@ export default function Rightbar({ user }) {
               src={`${PF}add.png`}
               alt=""
               width="95%"
-              style={{ borderRadius: "10px" }}
+              style={{ borderRadius: '10px' }}
             />
           </div>
         </div>

@@ -1,19 +1,20 @@
-import "./App.css";
-import Home from "./Pages/Home/Home";
-import Profile from "./Pages/Profile/Profile";
-import Messenger from "./Pages/Messenger/Messenger";
-import News from "./Pages/News/News";
-import Videos from "./Pages/Videos/Videos";
-import Login from "./Components/Login/Login";
-import Register from "./Components/Register/Register";
+import './App.css';
+import React from 'react';
+import Home from './Pages/Home/Home';
+import Profile from './Pages/Profile/Profile';
+import Messenger from './Pages/Messenger/Messenger';
+import News from './Pages/News/News';
+import Videos from './Pages/Videos/Videos';
+import Login from './Components/Login/Login';
+import Register from './Components/Register/Register';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
   Redirect,
-} from "react-router-dom";
-import { useContext, useEffect } from "react";
-import { AuthContext } from "./Context/AuthContext";
+} from 'react-router-dom';
+import { useContext, useEffect } from 'react';
+import { AuthContext } from './Context/AuthContext';
 
 function App() {
   const { user } = useContext(AuthContext);
