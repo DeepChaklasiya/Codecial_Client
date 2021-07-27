@@ -1,0 +1,17 @@
+.ownClass {
+  align-self: flex-end;
+}
+
+.ownMessageColor {
+  color: black;
+  background-color: rgb(187, 178, 178);
+  margin-right: 15px;
+}
+
+.whiteText {
+  color: rgb(236, 228, 228);
+}
+
+.blackText {
+  color: #383838;
+}

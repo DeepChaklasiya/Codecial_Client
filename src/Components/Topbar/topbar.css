@@ -1,0 +1,20 @@
+.height150 {
+  height: 55px;
+}
+
+.form-control:focus {
+  box-shadow: none !important;
+}
+
+.hoverName {
+  border-radius: 10px;
+  background-color: rgb(241, 238, 238);
+}
+
+.hoverName:hover {
+  background-color: #d8d7d7;
+}
+
+.hoverImg:hover {
+  background-color: rgb(129, 179, 228);
+}
