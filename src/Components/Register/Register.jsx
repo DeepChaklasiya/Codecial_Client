@@ -1,10 +1,10 @@
-import axios from "axios";
-import React from "react";
-import { useRef, useState } from "react";
-import { useHistory } from "react-router";
-import { Redirect } from "react-router";
-import { Link } from "react-router-dom";
-import GoogleLogin from "react-google-login";
+import axios from 'axios';
+import React from 'react';
+import { useRef, useState } from 'react';
+import { useHistory } from 'react-router';
+import { Redirect } from 'react-router';
+import { Link } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
 
 export default function Register() {
   const username = useRef();
@@ -30,7 +30,7 @@ export default function Register() {
     try {
       const res = await axios.get(`/users?username=${username.current.value}`);
       if (res.data) {
-        return setUsernameError("Username already exist");
+        return setUsernameError('Username already exist');
       }
     } catch (err) {
       console.log(err);
@@ -42,14 +42,14 @@ export default function Register() {
     try {
       const res = await axios.get(`/users/email?email=${email.current.value}`);
       if (res.data) {
-        return setEmailError("Email already exist");
+        return setEmailError('Email already exist');
       }
     } catch (err) {
       console.log(err);
     }
 
     if (password.current.value.length < 6) {
-      return setPasswordError("Password length must be more than 6");
+      return setPasswordError('Password length must be more than 6');
     }
 
     if (password.current.value != confirmPassword.current.value) {
@@ -66,10 +66,10 @@ export default function Register() {
     };
 
     try {
-      const res = await axios.post("/auth/register", user);
-      history.push("/login");
+      const res = await axios.post('/auth/register', user);
+      history.push('/login');
     } catch (err) {
-      console.log("error", err);
+      console.log('error', err);
     }
     // }
   };
@@ -82,36 +82,36 @@ export default function Register() {
     };
 
     try {
-      const res = await axios.post("/auth/registerOauth", user);
+      const res = await axios.post('/auth/registerOauth', user);
       const loginUser = res.data;
-      console.log("loginuser", loginUser);
-      localStorage.setItem("user", JSON.stringify(loginUser));
+      console.log('loginuser', loginUser);
+      localStorage.setItem('user', JSON.stringify(loginUser));
       window.location.reload();
     } catch (err) {
-      console.log("error", err);
+      console.log('error', err);
     }
   };
 
   return (
     <div
       style={{
-        height: "100vh",
-        backgroundColor: "#E0E0E0",
-        position: "relative",
+        height: '100vh',
+        backgroundColor: '#E0E0E0',
+        position: 'relative',
       }}
     >
       <div
         className="d-flex"
         style={{
-          position: "absolute",
-          width: "1000px",
-          margin: "150px 200px",
-          backgroundColor: "#E0E0E0",
+          position: 'absolute',
+          width: '1000px',
+          margin: '150px 200px',
+          backgroundColor: '#E0E0E0',
         }}
       >
-        <div style={{ width: "50%", height: "100%" }}>
-          <div className="mx-5 " style={{ width: "400px", marginTop: "150px" }}>
-            <h1 className="font-weight-bold" style={{ color: "#1775EE" }}>
+        <div style={{ width: '50%', height: '100%' }}>
+          <div className="mx-5 " style={{ width: '400px', marginTop: '150px' }}>
+            <h1 className="font-weight-bold" style={{ color: '#1775EE' }}>
               Codecial
             </h1>
             <h5 className="pt-1">
@@ -119,36 +119,36 @@ export default function Register() {
             </h5>
           </div>
         </div>
-        <div style={{ width: "50%", height: "100%" }}>
+        <div style={{ width: '50%', height: '100%' }}>
           <div
             className="card my-3"
             style={{
-              width: "400px",
-              marginTop: "25px",
-              marginLeft: "50px",
-              borderRadius: "10px",
-              border: "0px",
+              width: '400px',
+              marginTop: '25px',
+              marginLeft: '50px',
+              borderRadius: '10px',
+              border: '0px',
             }}
           >
             <div
               style={{
-                width: "350px",
-                marginTop: "20px",
-                marginLeft: "25px",
+                width: '350px',
+                marginTop: '20px',
+                marginLeft: '25px',
               }}
             >
               <form onSubmit={handleSubmit}>
                 <div
                   className={
                     usernameError
-                      ? "d-flex align-items-center"
-                      : "d-flex align-items-center mb-3"
+                      ? 'd-flex align-items-center'
+                      : 'd-flex align-items-center mb-3'
                   }
                   style={{
-                    width: "100%",
-                    height: "50px",
-                    borderRadius: "10px",
-                    border: "1px solid gray",
+                    width: '100%',
+                    height: '50px',
+                    borderRadius: '10px',
+                    border: '1px solid gray',
                   }}
                 >
                   <input
@@ -164,14 +164,14 @@ export default function Register() {
                 <div
                   className={
                     emailError
-                      ? "d-flex align-items-center"
-                      : "d-flex align-items-center mb-3"
+                      ? 'd-flex align-items-center'
+                      : 'd-flex align-items-center mb-3'
                   }
                   style={{
-                    width: "100%",
-                    height: "50px",
-                    borderRadius: "10px",
-                    border: "1px solid gray",
+                    width: '100%',
+                    height: '50px',
+                    borderRadius: '10px',
+                    border: '1px solid gray',
                   }}
                 >
                   <input
@@ -187,14 +187,14 @@ export default function Register() {
                 <div
                   className={
                     passwordError
-                      ? "d-flex align-items-center"
-                      : "d-flex align-items-center mb-3"
+                      ? 'd-flex align-items-center'
+                      : 'd-flex align-items-center mb-3'
                   }
                   style={{
-                    width: "100%",
-                    height: "50px",
-                    borderRadius: "10px",
-                    border: "1px solid gray",
+                    width: '100%',
+                    height: '50px',
+                    borderRadius: '10px',
+                    border: '1px solid gray',
                   }}
                 >
                   <input
@@ -210,14 +210,14 @@ export default function Register() {
                 <div
                   className={
                     confirmPasswordError
-                      ? "d-flex align-items-center"
-                      : "d-flex align-items-center mb-3"
+                      ? 'd-flex align-items-center'
+                      : 'd-flex align-items-center mb-3'
                   }
                   style={{
-                    width: "100%",
-                    height: "50px",
-                    borderRadius: "10px",
-                    border: "1px solid gray",
+                    width: '100%',
+                    height: '50px',
+                    borderRadius: '10px',
+                    border: '1px solid gray',
                   }}
                 >
                   <input
@@ -235,16 +235,16 @@ export default function Register() {
                 <div
                   className="d-flex align-items-center mb-3"
                   style={{
-                    width: "100%",
-                    height: "45px",
-                    borderRadius: "5px",
-                    backgroundColor: "#1775EE",
+                    width: '100%',
+                    height: '45px',
+                    borderRadius: '5px',
+                    backgroundColor: '#1775EE',
                   }}
                 >
                   <button
                     type="submit"
                     className="btn btn-block text-white font-weight-bold"
-                    style={{ backgroundColor: "#1775EE" }}
+                    style={{ backgroundColor: '#1775EE' }}
                   >
                     Sign Up
                   </button>
@@ -253,9 +253,9 @@ export default function Register() {
                 <div
                   className="d-flex align-items-center mb-3 "
                   style={{
-                    width: "100%",
-                    height: "45px",
-                    borderRadius: "5px",
+                    width: '100%',
+                    height: '45px',
+                    borderRadius: '5px',
                   }}
                 >
                   <GoogleLogin
@@ -263,11 +263,11 @@ export default function Register() {
                     clientId="953613880079-npqf053gt80b5r5cfcgn9jkl5lntv0ob.apps.googleusercontent.com"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
-                    cookiePolicy={"single_host_origin"}
+                    cookiePolicy={'single_host_origin'}
                   >
                     <span
                       className="font-weight-bold"
-                      style={{ fontSize: "15px" }}
+                      style={{ fontSize: '15px' }}
                     >
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Sign
                       up with Google
@@ -276,20 +276,20 @@ export default function Register() {
                 </div>
               </form>
 
-              <Link to="/login" style={{ textDecoration: "none" }}>
+              <Link to="/login" style={{ textDecoration: 'none' }}>
                 <div
                   className="d-flex align-items-center mb-2 mx-auto"
                   style={{
-                    width: "70%",
-                    height: "45px",
-                    borderRadius: "5px",
-                    backgroundColor: "#42B728",
+                    width: '70%',
+                    height: '45px',
+                    borderRadius: '5px',
+                    backgroundColor: '#42B728',
                   }}
                 >
                   <button
                     type="text"
                     className="btn btn-block text-white font-weight-bold"
-                    style={{ backgroundColor: "#42B728" }}
+                    style={{ backgroundColor: '#42B728' }}
                   >
                     Log In into Account
                   </button>
