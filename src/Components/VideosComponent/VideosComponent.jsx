@@ -1,7 +1,7 @@
-import React from "react";
-import { useEffect, useState } from "react";
-import { format } from "timeago.js";
-import SearchIcon from "@material-ui/icons/Search";
+import React from 'react';
+import { useEffect, useState } from 'react';
+import { format } from 'timeago.js';
+import SearchIcon from '@material-ui/icons/Search';
 
 export default function VideosComponent() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -9,7 +9,7 @@ export default function VideosComponent() {
   const [videos, setVideos] = useState([]);
   const [clicked, setClicked] = useState(false);
   const [playVideo, setPlayVideo] = useState(null);
-  const [videoSrc, setVideoSrc] = useState("");
+  const [videoSrc, setVideoSrc] = useState('');
 
   useEffect(() => {
     const setYtVideos = async () => {
@@ -36,21 +36,21 @@ export default function VideosComponent() {
 
   return (
     <>
-      <div style={{ height: "calc(100vh - 55px)", overflow: "scroll" }}>
+      <div style={{ height: 'calc(100vh - 55px)', overflow: 'scroll' }}>
         <div className="d-flex justify-content-center mt-3">
-          <img src={PF + "youtube.jpeg"} height="50px" />
+          <img src={PF + 'youtube.jpeg'} height="50px" />
         </div>
 
         <div
           className="d-flex justify-content-between mt-2 mx-auto"
           style={{
-            width: "800px",
-            height: "45px",
-            borderRadius: "10px",
-            border: "1px solid black",
+            width: '800px',
+            height: '45px',
+            borderRadius: '10px',
+            border: '1px solid black',
           }}
         >
-          <div className="d-flex align-items-center" style={{ width: "90%" }}>
+          <div className="d-flex align-items-center" style={{ width: '90%' }}>
             <input
               onChange={(e) => setSearch(e.target.value)}
               type="text"
@@ -61,10 +61,10 @@ export default function VideosComponent() {
           <button
             className="btn d-flex align-items-center justify-content-center"
             style={{
-              width: "10%",
-              borderRadius: "10px",
-              backgroundColor: "gray",
-              color: "white",
+              width: '10%',
+              borderRadius: '10px',
+              backgroundColor: 'gray',
+              color: 'white',
             }}
             onClick={() => setClicked(!clicked)}
           >
@@ -74,13 +74,13 @@ export default function VideosComponent() {
         <div className="d-flex mt-3">
           <div
             style={{
-              width: "65%",
-              height: "calc(100vh - 220px)",
-              overflow: "scroll",
+              width: '65%',
+              height: 'calc(100vh - 220px)',
+              overflow: 'scroll',
             }}
           >
             {playVideo && (
-              <div className="ml-4" style={{ width: "650px" }}>
+              <div className="ml-4" style={{ width: '650px' }}>
                 <iframe
                   width="650px"
                   allowFullScreen
@@ -91,7 +91,7 @@ export default function VideosComponent() {
                   {playVideo.snippet.title}
                 </div>
                 <div className="mt-3">{playVideo.snippet.description}</div>
-                <div className="mt-3" style={{ fontSize: "14px" }}>
+                <div className="mt-3" style={{ fontSize: '14px' }}>
                   {format(playVideo.snippet.publishedAt)}
                 </div>
               </div>
@@ -100,16 +100,16 @@ export default function VideosComponent() {
           <div
             className="mr-2"
             style={{
-              height: "calc(100vh - 200px)",
-              overflow: "scroll",
-              width: "35%",
-              border: videos?.length > 0 ? "1px solid black" : "0",
+              height: 'calc(100vh - 200px)',
+              overflow: 'scroll',
+              width: '35%',
+              border: videos?.length > 0 ? '1px solid black' : '0',
             }}
           >
             {videos.map((video) => (
               <div
                 className="d-flex m-2"
-                style={{ cursor: "pointer" }}
+                style={{ cursor: 'pointer' }}
                 onClick={() => handlePlay(video)}
               >
                 <div>
@@ -123,29 +123,29 @@ export default function VideosComponent() {
                 <div className="ml-2">
                   <div
                     style={{
-                      fontSize: "14px",
-                      height: "65px",
-                      overflow: "hidden",
+                      fontSize: '14px',
+                      height: '65px',
+                      overflow: 'hidden',
                     }}
                   >
                     {video.snippet.title}
                   </div>
                   <div
                     style={{
-                      color: "gray",
-                      fontSize: "12px",
-                      height: "17px",
-                      overflow: "hidden",
+                      color: 'gray',
+                      fontSize: '12px',
+                      height: '17px',
+                      overflow: 'hidden',
                     }}
                   >
                     by {video.snippet.channelTitle}
                   </div>
                   <div
                     style={{
-                      color: "gray",
-                      fontSize: "12px",
-                      height: "17px",
-                      overflow: "hidden",
+                      color: 'gray',
+                      fontSize: '12px',
+                      height: '17px',
+                      overflow: 'hidden',
                     }}
                   >
                     {format(video.snippet.publishedAt)}

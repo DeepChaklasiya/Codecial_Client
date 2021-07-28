@@ -20,17 +20,23 @@ export default function ProfileRightbar({ user }) {
   const handleClick = async () => {
     try {
       if (followed) {
-        await axios.put(`/users/${user._id}/unfollow`, {
-          userId: currentUser._id,
-        });
+        await axios.put(
+          `https://codecial-server.herokuapp.com/api/users/${user._id}/unfollow`,
+          {
+            userId: currentUser._id,
+          }
+        );
         dispatch({ type: 'UNFOLLOW', payload: user._id });
       } else {
-        await axios.put(`/users/${user._id}/follow`, {
-          userId: currentUser._id,
-        });
+        await axios.put(
+          `https://codecial-server.herokuapp.com/api/users/${user._id}/follow`,
+          {
+            userId: currentUser._id,
+          }
+        );
 
         const flag = await axios.get(
-          `/conversations/find/${currentUser._id}/${user._id}`
+          `https://codecial-server.herokuapp.com/api/conversations/find/${currentUser._id}/${user._id}`
         );
         if (!flag.data) {
           const newConversation = {
@@ -38,7 +44,10 @@ export default function ProfileRightbar({ user }) {
             receiverId: user._id,
           };
 
-          const res = await axios.post('/conversations', newConversation);
+          const res = await axios.post(
+            'https://codecial-server.herokuapp.com/api/conversations',
+            newConversation
+          );
         }
         dispatch({ type: 'FOLLOW', payload: user._id });
       }
@@ -52,7 +61,9 @@ export default function ProfileRightbar({ user }) {
   useEffect(() => {
     const getFriends = async () => {
       try {
-        const friendList = await axios.get('/users/friends/' + user._id);
+        const friendList = await axios.get(
+          'https://codecial-server.herokuapp.com/api/users/friends/' + user._id
+        );
         setFriends(friendList.data);
       } catch (err) {
         console.log(err);

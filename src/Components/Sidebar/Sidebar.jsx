@@ -7,7 +7,6 @@ import {
   PlayCircleFilledOutlined,
   Group,
   Bookmarks,
-  Questions,
   HelpOutline,
   WorkOutline,
   Event,
@@ -28,7 +27,9 @@ export default function Sidebar() {
 
   useEffect(() => {
     const getFriends = async () => {
-      const res = await axios.get(`/users/friends/${user._id}`);
+      const res = await axios.get(
+        `https://codecial-server.herokuapp.com/api/users/friends/${user._id}`
+      );
       setFriends(res.data);
     };
 

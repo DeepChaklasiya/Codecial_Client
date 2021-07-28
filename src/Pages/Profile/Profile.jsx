@@ -1,14 +1,14 @@
-import React from "react";
-import Topbar from "../../Components/Topbar/Topbar";
-import Sidebar from "../../Components/Sidebar/Sidebar";
-import Feed from "../../Components/Feed/Feed";
-import Rightbar from "../../Components/Rightbar/Rightbar";
-import "./profile.css";
-import { useState, useEffect, useContext } from "react";
-import axios from "axios";
-import { useHistory, useParams } from "react-router-dom";
-import { CameraAlt, CodeSharp, Edit } from "@material-ui/icons";
-import { AuthContext } from "../../Context/AuthContext";
+import React from 'react';
+import Topbar from '../../Components/Topbar/Topbar';
+import Sidebar from '../../Components/Sidebar/Sidebar';
+import Feed from '../../Components/Feed/Feed';
+import Rightbar from '../../Components/Rightbar/Rightbar';
+import './profile.css';
+import { useState, useEffect, useContext } from 'react';
+import axios from 'axios';
+import { useHistory, useParams } from 'react-router-dom';
+import { CameraAlt, CodeSharp, Edit } from '@material-ui/icons';
+import { AuthContext } from '../../Context/AuthContext';
 
 export default function Profile() {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -28,10 +28,12 @@ export default function Profile() {
   useEffect(() => {
     const fetchUser = async () => {
       try {
-        const res = await axios.get(`/users?username=${username}`);
+        const res = await axios.get(
+          `https://codecial-server.herokuapp.com/api/users?username=${username}`
+        );
         setUser(res.data);
       } catch (err) {
-        console.log("Profile File Error");
+        console.log('Profile File Error');
       }
     };
     fetchUser();
@@ -47,23 +49,29 @@ export default function Profile() {
         if (fileProfile) {
           const dataP = new FormData();
           const filenameP = Date.now() + fileProfile.name;
-          dataP.append("name", filenameP);
-          dataP.append("file", fileProfile);
+          dataP.append('name', filenameP);
+          dataP.append('file', fileProfile);
           updatedUser.profilePicture = filenameP;
           try {
-            await axios.post("/upload", dataP);
+            await axios.post(
+              'https://codecial-server.herokuapp.com/api/upload',
+              dataP
+            );
           } catch (err) {
             console.log(err);
           }
 
-          const res = await axios.put(`/users/${user._id}`, updatedUser);
-          localStorage.removeItem("user");
-          localStorage.setItem("user", JSON.stringify(updatedUser));
+          const res = await axios.put(
+            `https://codecial-server.herokuapp.com/api/users/${user._id}`,
+            updatedUser
+          );
+          localStorage.removeItem('user');
+          localStorage.setItem('user', JSON.stringify(updatedUser));
           history.push(`/profile/${currentUser.username}`);
           window.location.reload();
         }
       } catch (err) {
-        console.log("Profile File Error");
+        console.log('Profile File Error');
       }
     };
     updateProfile();
@@ -72,15 +80,15 @@ export default function Profile() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (changeUsername.length < 3 || changeUsername.length > 20) {
-      return setUsernameError("Username length must be 3 to 20");
+      return setUsernameError('Username length must be 3 to 20');
     } else {
       try {
         const fetchedUser = await axios.get(
-          `/users/editProfile?username=${changeUsername}`
+          `https://codecial-server.herokuapp.com/api/users/editProfile?username=${changeUsername}`
         );
         if (
           fetchedUser.data._id === currentUser._id ||
-          fetchedUser.data === "User not Found"
+          fetchedUser.data === 'User not Found'
         ) {
           //grant permission
           const newUser = {
@@ -91,12 +99,12 @@ export default function Profile() {
             relationship: parseInt(changeRelationship),
           };
           const updatedUser = await axios.put(
-            `/users/${currentUser._id}`,
+            `https://codecial-server.herokuapp.com/api/users/${currentUser._id}`,
             newUser
           );
-          localStorage.removeItem("user");
+          localStorage.removeItem('user');
           localStorage.clear();
-          localStorage.setItem("user", JSON.stringify(newUser));
+          localStorage.setItem('user', JSON.stringify(newUser));
           setUsernameError(null);
           setChangeUsername(currentUser.username);
           setChangeCity(currentUser.city);
@@ -106,10 +114,10 @@ export default function Profile() {
           history.push(`/profile/${newUser.username}`);
           window.location.reload();
         } else {
-          setUsernameError("This username is already exist");
+          setUsernameError('This username is already exist');
         }
       } catch (err) {
-        console.log("Edit Profile File Error");
+        console.log('Edit Profile File Error');
       }
     }
   };
@@ -140,9 +148,9 @@ export default function Profile() {
                 <div className="mainImage">
                   <img
                     src={
-                      user.coverPicture ? PF + user.coverPicture : PF + "16.png"
+                      user.coverPicture ? PF + user.coverPicture : PF + '16.png'
                     }
-                    style={{ width: "100%", height: "100%" }}
+                    style={{ width: '100%', height: '100%' }}
                   ></img>
                 </div>
                 <div className="subImage">
@@ -150,24 +158,24 @@ export default function Profile() {
                     src={
                       user.profilePicture
                         ? PF + user.profilePicture
-                        : PF + "noUserImage.png"
+                        : PF + 'noUserImage.png'
                     }
                     style={{
-                      width: "100%",
-                      height: "100%",
-                      borderRadius: "50%",
+                      width: '100%',
+                      height: '100%',
+                      borderRadius: '50%',
                     }}
                   ></img>
                 </div>
                 {username === currentUser.username && (
                   <div
                     className="changeProfile "
-                    style={{ width: "50px", height: "50px" }}
+                    style={{ width: '50px', height: '50px' }}
                   >
                     <label
                       htmlFor="fileProfile"
                       className="d-flex mt-2 align-items-center justify-content-center"
-                      style={{ cursor: "pointer" }}
+                      style={{ cursor: 'pointer' }}
                     >
                       <CameraAlt />
                       <input
@@ -181,7 +189,7 @@ export default function Profile() {
                   </div>
                 )}
               </div>
-              <div style={{ height: "70px" }}></div>
+              <div style={{ height: '70px' }}></div>
               <div className="d-flex align-items-center justify-content-center text-center mb-2 h4 font-weight-bold">
                 <div className="ml-4">{user.username}</div>
                 {username === currentUser.username && (
@@ -192,11 +200,11 @@ export default function Profile() {
                       data-backdrop="static"
                       className="ml-2 d-flex align-items-center justify-content-center"
                       style={{
-                        width: "35px",
-                        height: "35px",
-                        borderRadius: "50%",
-                        backgroundColor: "rgb(216, 214, 214)",
-                        cursor: "pointer",
+                        width: '35px',
+                        height: '35px',
+                        borderRadius: '50%',
+                        backgroundColor: 'rgb(216, 214, 214)',
+                        cursor: 'pointer',
                       }}
                     >
                       <Edit />
@@ -233,15 +241,15 @@ export default function Profile() {
                             </button>
                           </div>
                           <form
-                            style={{ fontSize: "18px", fontWeight: "" }}
+                            style={{ fontSize: '18px', fontWeight: '' }}
                             onSubmit={(e) => handleSubmit(e)}
                           >
                             <div class="modal-body">
                               <div
                                 className={
                                   usernameError
-                                    ? "row d-flex align-items-center"
-                                    : "mb-3 row d-flex align-items-center"
+                                    ? 'row d-flex align-items-center'
+                                    : 'mb-3 row d-flex align-items-center'
                                 }
                               >
                                 <div className="col-4 text-left">
@@ -261,7 +269,7 @@ export default function Profile() {
                                   <div className="col-4 text-left"></div>
                                   <div
                                     className="col-8 text-danger"
-                                    style={{ fontSize: "15px" }}
+                                    style={{ fontSize: '15px' }}
                                   >
                                     {usernameError}
                                   </div>

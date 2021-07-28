@@ -1,8 +1,8 @@
-import React from "react";
-import { AuthContext } from "../../Context/AuthContext";
-import { useState, useEffect } from "react";
-import "./conversation.css";
-import axios from "axios";
+import React from 'react';
+import { AuthContext } from '../../Context/AuthContext';
+import { useState, useEffect } from 'react';
+import './conversation.css';
+import axios from 'axios';
 
 export default function Conversation({ conversation, currentUser }) {
   const [user, setUser] = useState(null);
@@ -15,7 +15,9 @@ export default function Conversation({ conversation, currentUser }) {
 
     const getFriend = async () => {
       try {
-        const res = await axios.get("users?userId=" + friendId);
+        const res = await axios.get(
+          'https://codecial-server.herokuapp.com/api/users?userId=' + friendId
+        );
         setUser(res.data);
       } catch (err) {
         console.log(err);
@@ -31,10 +33,10 @@ export default function Conversation({ conversation, currentUser }) {
         src={
           user && user.profilePicture
             ? PF + user.profilePicture
-            : PF + "noUserImage.png"
+            : PF + 'noUserImage.png'
         }
         alt=""
-        style={{ height: "32px", width: "32px" }}
+        style={{ height: '32px', width: '32px' }}
         className="rounded-circle ml-2"
       ></img>
       <span className="ml-2">{user?.username}</span>

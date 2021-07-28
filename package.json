@@ -44,5 +44,5 @@
       "last 1 safari version"
     ]
   },
-  "proxy": "https://codecial-server.herokuapp.com/"
+  "proxy": "https://codecial-server.herokuapp.com/api/"
 }

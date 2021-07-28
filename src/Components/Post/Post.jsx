@@ -20,7 +20,9 @@ export default function Post({ post }) {
 
   useEffect(() => {
     const fetchUser = async () => {
-      const res = await axios.get(`/users?userId=${post.userId}`);
+      const res = await axios.get(
+        `https://codecial-server.herokuapp.com/api/users?userId=${post.userId}`
+      );
       setUser(res.data);
     };
 
@@ -29,9 +31,12 @@ export default function Post({ post }) {
 
   const likeHandler = async () => {
     try {
-      const res = await axios.put(`/posts/${post._id}/like`, {
-        userId: currentUser._id,
-      });
+      const res = await axios.put(
+        `https://codecial-server.herokuapp.com/api/posts/${post._id}/like`,
+        {
+          userId: currentUser._id,
+        }
+      );
     } catch (err) {
       console.log('post file error', err);
     }
@@ -41,7 +46,9 @@ export default function Post({ post }) {
 
   const handleDelete = async () => {
     try {
-      const res = await axios.delete(`/posts/${post._id}`);
+      const res = await axios.delete(
+        `https://codecial-server.herokuapp.com/api/posts/${post._id}`
+      );
       window.alert(res.data);
       window.location.reload();
     } catch (err) {

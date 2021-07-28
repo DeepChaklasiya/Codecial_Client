@@ -7,7 +7,6 @@ import { io } from 'socket.io-client';
 import { useParams } from 'react-router-dom';
 import { AuthContext } from '../../Context/AuthContext';
 import axios from 'axios';
-const YoutubeMusicApi = require('youtube-music-api');
 
 export default function Rightbar({ user }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;

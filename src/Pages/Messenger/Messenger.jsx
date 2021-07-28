@@ -57,7 +57,9 @@ export default function Messenger() {
   useEffect(() => {
     const getConversation = async () => {
       try {
-        const res = await axios.get('/conversations/' + user._id);
+        const res = await axios.get(
+          'https://codecial-server.herokuapp.com/api/conversations/' + user._id
+        );
         setConversations(res.data);
       } catch (err) {
         console.log('Messanger file', err);
@@ -69,7 +71,10 @@ export default function Messenger() {
   useEffect(() => {
     const getMessages = async () => {
       try {
-        const res = await axios.get('/messages/' + currentChat?._id);
+        const res = await axios.get(
+          'https://codecial-server.herokuapp.com/api/messages/' +
+            currentChat?._id
+        );
         const dummy = res.data;
         const temp = dummy.map((data) => {
           return {
@@ -94,7 +99,9 @@ export default function Messenger() {
         (member) => member !== user._id
       );
       try {
-        const res = await axios.get(`/users?userId=${receiverId}`);
+        const res = await axios.get(
+          `https://codecial-server.herokuapp.com/api/users?userId=${receiverId}`
+        );
         setReceiverProfile(res.data.profilePicture);
       } catch (err) {
         console.log('Messenger File Error', err);
@@ -124,7 +131,10 @@ export default function Messenger() {
     });
 
     try {
-      const res = await axios.post('/messages', message);
+      const res = await axios.post(
+        'https://codecial-server.herokuapp.com/api/messages',
+        message
+      );
       setMessages([...messages, res.data]);
       setNewMessages('');
     } catch (err) {

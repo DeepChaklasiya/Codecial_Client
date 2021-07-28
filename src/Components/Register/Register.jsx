@@ -17,6 +17,7 @@ export default function Register() {
   const [emailError, setEmailError] = useState(null);
   const [passwordError, setPasswordError] = useState(null);
   const [confirmPasswordError, setConfirmPasswordError] = useState(null);
+  const [isError, setIsError] = useState(false);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -28,7 +29,9 @@ export default function Register() {
       return setUsernameError("Username can't be empty");
     }
     try {
-      const res = await axios.get(`/users?username=${username.current.value}`);
+      const res = await axios.get(
+        `https://codecial-server.herokuapp.com/api/users?username=${username.current.value}`
+      );
       if (res.data) {
         return setUsernameError('Username already exist');
       }
@@ -40,7 +43,9 @@ export default function Register() {
       return setEmailError("Email can't be empty");
     }
     try {
-      const res = await axios.get(`/users/email?email=${email.current.value}`);
+      const res = await axios.get(
+        `https://codecial-server.herokuapp.com/api/users/email?email=${email.current.value}`
+      );
       if (res.data) {
         return setEmailError('Email already exist');
       }
@@ -66,7 +71,10 @@ export default function Register() {
     };
 
     try {
-      const res = await axios.post('/auth/register', user);
+      const res = await axios.post(
+        'https://codecial-server.herokuapp.com/api/auth/register',
+        user
+      );
       history.push('/login');
     } catch (err) {
       console.log('error', err);
@@ -75,20 +83,34 @@ export default function Register() {
   };
 
   const responseGoogle = async (res) => {
+    setIsError(false);
     const user = {
-      username: res.profileObj.name,
+      username: res.profileObj?.name,
       email: res.profileObj.email,
       withGoogle: true,
     };
-
     try {
-      const res = await axios.post('/auth/registerOauth', user);
-      const loginUser = res.data;
-      console.log('loginuser', loginUser);
-      localStorage.setItem('user', JSON.stringify(loginUser));
-      window.location.reload();
+      const res1 = await axios.get(
+        `https://codecial-server.herokuapp.com/api/users/email?email=${user.email}`
+      );
+      if (res1.data) {
+        setIsError(true);
+        return;
+      }
+      try {
+        const res = await axios.post(
+          'https://codecial-server.herokuapp.com/api/auth/registerOauth',
+          user
+        );
+        const loginUser = res.data;
+        console.log('loginuser', loginUser);
+        localStorage.setItem('user', JSON.stringify(loginUser));
+        window.location.reload();
+      } catch (err) {
+        console.log('error', err);
+      }
     } catch (err) {
-      console.log('error', err);
+      console.log(err);
     }
   };
 
@@ -120,11 +142,22 @@ export default function Register() {
           </div>
         </div>
         <div style={{ width: '50%', height: '100%' }}>
+          {isError && (
+            <div
+              className="text-center text-danger font-weight-bold"
+              style={{
+                width: '100%',
+                height: '25px',
+              }}
+            >
+              User not Found
+            </div>
+          )}
           <div
-            className="card my-3"
+            className="card"
             style={{
               width: '400px',
-              marginTop: '25px',
+              marginTop: isError ? '0px' : '25px',
               marginLeft: '50px',
               borderRadius: '10px',
               border: '0px',

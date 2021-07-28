@@ -27,14 +27,20 @@ export default function Share() {
       data.append('file', file);
       newPost.img = filename;
       try {
-        await axios.post('/upload', data);
+        await axios.post(
+          'https://codecial-server.herokuapp.com/api/upload',
+          data
+        );
       } catch (err) {
         console.log(err);
       }
     }
 
     try {
-      const res = await axios.post('/posts', newPost);
+      const res = await axios.post(
+        'https://codecial-server.herokuapp.com/api/posts',
+        newPost
+      );
       window.location.reload();
     } catch (err) {
       console.log('Share file error', err);

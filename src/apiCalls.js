@@ -5,7 +5,7 @@ export const loginCall = async (user, dispatch) => {
 
   try {
     const res = await axios.post(
-      'https://codecial-server.herokuapp.com/auth/login',
+      'https://codecial-server.herokuapp.com/api/auth/login',
       user
     );
     dispatch({ type: 'LOGIN_SUCCESS', payload: res.data });

@@ -1,6 +1,6 @@
-import axios from "axios";
-import React from "react";
-import { useEffect, useState } from "react";
+import axios from 'axios';
+import React from 'react';
+import { useEffect, useState } from 'react';
 
 export default function Online({ userId }) {
   const PF = process.env.REACT_APP_PUBLIC_FOLDER;
@@ -9,10 +9,12 @@ export default function Online({ userId }) {
   useEffect(() => {
     const getUser = async () => {
       try {
-        const res = await axios.get(`/users?userId=${userId}`);
+        const res = await axios.get(
+          `https://codecial-server.herokuapp.com/api/users?userId=${userId}`
+        );
         setUser(res.data);
       } catch (err) {
-        console.log("Online File Error", err);
+        console.log('Online File Error', err);
       }
     };
     getUser();
@@ -23,9 +25,9 @@ export default function Online({ userId }) {
       <li
         className="d-flex align-items-center my-2 pl-2"
         style={{
-          height: "40px",
-          width: "100%",
-          borderRadius: "10px",
+          height: '40px',
+          width: '100%',
+          borderRadius: '10px',
         }}
       >
         <div className="relativePosition">
@@ -33,15 +35,15 @@ export default function Online({ userId }) {
             src={
               user?.profilePicture
                 ? PF + user.profilePicture
-                : PF + "noUserImage.png"
+                : PF + 'noUserImage.png'
             }
             alt="empty"
-            style={{ height: "30px", width: "30px" }}
+            style={{ height: '30px', width: '30px' }}
             className="rounded-circle"
           ></img>
           <span className="rightbarOnline"></span>
         </div>
-        <div style={{ width: "15px" }}></div>
+        <div style={{ width: '15px' }}></div>
         <span>{user?.username}</span>
       </li>
     </ul>

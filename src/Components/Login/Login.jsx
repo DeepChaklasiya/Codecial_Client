@@ -1,11 +1,11 @@
-import React, { useState } from "react";
-import { useRef, useContext } from "react";
-import { loginCall } from "../../apiCalls";
-import { AuthContext } from "../../Context/AuthContext";
-import { CircularProgress } from "@material-ui/core";
-import { Link } from "react-router-dom";
-import GoogleLogin from "react-google-login";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useRef, useContext } from 'react';
+import { loginCall } from '../../apiCalls';
+import { AuthContext } from '../../Context/AuthContext';
+import { CircularProgress } from '@material-ui/core';
+import { Link } from 'react-router-dom';
+import GoogleLogin from 'react-google-login';
+import axios from 'axios';
 
 export default function Login() {
   const email = useRef();
@@ -16,36 +16,49 @@ export default function Login() {
   const handleSubmit = (event) => {
     event.preventDefault();
     setNewError(false);
+    setIsError(false);
     loginCall(
       { email: email.current.value, password: password.current.value },
       dispatch
     );
     setNewError(error);
-    console.log("Error", newError);
+    console.log('Error', newError);
   };
 
   const responseGoogle = async (response) => {
+    setIsError(false);
     try {
       const res = await axios.get(
-        "/users?username=" + response.profileObj.name
+        'https://codecial-server.herokuapp.com/api/users?username=' +
+          response.profileObj.name
       );
+      if (res.data === null) {
+        setIsError(true);
+        return;
+      }
       const loginUser = res.data;
       if (loginUser.withGoogle) {
         try {
-          const res1 = await axios.post("/auth/loginOauth", {
-            email: loginUser.email,
-          });
+          const res1 = await axios.post(
+            'https://codecial-server.herokuapp.com/api/auth/loginOauth',
+            {
+              email: loginUser.email,
+            }
+          );
+          if (res1.data === 'User not found') {
+            setIsError(true);
+            return;
+          }
           const user = res1.data;
-          localStorage.setItem("user", JSON.stringify(user));
+          localStorage.setItem('user', JSON.stringify(user));
           window.location.reload();
         } catch (err) {
-          console.log("Login File Error1");
+          console.log('Login File Error1');
         }
       } else {
-        console.log("User not Found");
+        console.log('User not Found');
       }
     } catch (err) {
-      setIsError(true);
       console.log(err);
     }
   };
@@ -53,24 +66,24 @@ export default function Login() {
   return (
     <div
       style={{
-        height: "100vh",
-        backgroundColor: "#E0E0E0",
-        position: "relative",
+        height: '100vh',
+        backgroundColor: '#E0E0E0',
+        position: 'relative',
       }}
     >
       <div
         className="d-flex"
         style={{
-          position: "absolute",
-          width: "1000px",
-          height: "450px",
-          margin: "150px 200px",
-          backgroundColor: "#E0E0E0",
+          position: 'absolute',
+          width: '1000px',
+          height: '450px',
+          margin: '150px 200px',
+          backgroundColor: '#E0E0E0',
         }}
       >
-        <div className="" style={{ width: "50%", height: "100%" }}>
-          <div className="mx-5 " style={{ width: "400px", marginTop: "150px" }}>
-            <h1 className="font-weight-bold" style={{ color: "#1775EE" }}>
+        <div className="" style={{ width: '50%', height: '100%' }}>
+          <div className="mx-5 " style={{ width: '400px', marginTop: '150px' }}>
+            <h1 className="font-weight-bold" style={{ color: '#1775EE' }}>
               Codecial
             </h1>
             <h5 className="pt-1">
@@ -78,13 +91,13 @@ export default function Login() {
             </h5>
           </div>
         </div>
-        <div style={{ width: "50%", height: "100%" }}>
+        <div style={{ width: '50%', height: '100%' }}>
           {isError && (
             <div
               className="text-center text-danger font-weight-bold"
               style={{
-                width: "100%",
-                height: "25px",
+                width: '100%',
+                height: '25px',
               }}
             >
               User not Found
@@ -93,28 +106,28 @@ export default function Login() {
           <div
             className="card"
             style={{
-              width: "400px",
-              marginTop: isError ? "0px" : "25px",
-              marginLeft: "50px",
-              borderRadius: "10px",
-              border: "0px",
+              width: '400px',
+              marginTop: isError ? '0px' : '25px',
+              marginLeft: '50px',
+              borderRadius: '10px',
+              border: '0px',
             }}
           >
             <div
               style={{
-                width: "350px",
-                marginTop: "25px",
-                marginLeft: "25px",
+                width: '350px',
+                marginTop: '25px',
+                marginLeft: '25px',
               }}
             >
               <form onSubmit={handleSubmit}>
                 <div
                   className="d-flex align-items-center mb-3"
                   style={{
-                    width: "100%",
-                    height: "50px",
-                    borderRadius: "10px",
-                    border: "1px solid gray",
+                    width: '100%',
+                    height: '50px',
+                    borderRadius: '10px',
+                    border: '1px solid gray',
                   }}
                 >
                   <input
@@ -128,10 +141,10 @@ export default function Login() {
                 <div
                   className="d-flex align-items-center mb-3"
                   style={{
-                    width: "100%",
-                    height: "50px",
-                    borderRadius: "10px",
-                    border: "1px solid gray",
+                    width: '100%',
+                    height: '50px',
+                    borderRadius: '10px',
+                    border: '1px solid gray',
                   }}
                 >
                   <input
@@ -149,22 +162,22 @@ export default function Login() {
                 <div
                   className="d-flex align-items-center mb-3"
                   style={{
-                    width: "100%",
-                    height: "45px",
-                    borderRadius: "5px",
-                    backgroundColor: "#1775EE",
+                    width: '100%',
+                    height: '45px',
+                    borderRadius: '5px',
+                    backgroundColor: '#1775EE',
                   }}
                 >
                   <button
                     type="submit"
                     className="btn btn-block text-white font-weight-bold"
-                    style={{ backgroundColor: "#1775EE" }}
+                    style={{ backgroundColor: '#1775EE' }}
                     disabled={isFetching}
                   >
                     {isFetching ? (
                       <CircularProgress color="white" size="19px" />
                     ) : (
-                      "Log In"
+                      'Log In'
                     )}
                   </button>
                 </div>
@@ -172,9 +185,9 @@ export default function Login() {
                 <div
                   className="d-flex align-items-center mb-3 "
                   style={{
-                    width: "100%",
-                    height: "45px",
-                    borderRadius: "5px",
+                    width: '100%',
+                    height: '45px',
+                    borderRadius: '5px',
                   }}
                 >
                   <GoogleLogin
@@ -182,11 +195,11 @@ export default function Login() {
                     clientId="953613880079-npqf053gt80b5r5cfcgn9jkl5lntv0ob.apps.googleusercontent.com"
                     onSuccess={responseGoogle}
                     onFailure={responseGoogle}
-                    cookiePolicy={"single_host_origin"}
+                    cookiePolicy={'single_host_origin'}
                   >
                     <span
                       className="font-weight-bold"
-                      style={{ fontSize: "15px" }}
+                      style={{ fontSize: '15px' }}
                     >
                       &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Log
                       in with Google
@@ -197,30 +210,30 @@ export default function Login() {
 
               <div
                 className="d-flex align-items-center text-center mb-3"
-                style={{ width: "100%", height: "45px" }}
+                style={{ width: '100%', height: '45px' }}
               >
                 <a
                   className="mx-auto"
-                  style={{ cursor: "pointer", color: "#1775EE" }}
+                  style={{ cursor: 'pointer', color: '#1775EE' }}
                 >
                   Forgot Password ?
                 </a>
               </div>
 
-              <Link to="/register" style={{ textDecoration: "none" }}>
+              <Link to="/register" style={{ textDecoration: 'none' }}>
                 <div
                   className="d-flex align-items-center mb-2 mx-auto"
                   style={{
-                    width: "70%",
-                    height: "45px",
-                    borderRadius: "5px",
-                    backgroundColor: "#42B728",
+                    width: '70%',
+                    height: '45px',
+                    borderRadius: '5px',
+                    backgroundColor: '#42B728',
                   }}
                 >
                   <button
                     type="text"
                     className="btn btn-block text-white font-weight-bold"
-                    style={{ backgroundColor: "#42B728" }}
+                    style={{ backgroundColor: '#42B728' }}
                   >
                     Create a New Account
                   </button>
